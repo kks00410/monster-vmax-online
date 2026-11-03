@@ -9,7 +9,7 @@ window.MONSTER_CARDS = [
     atk: 36,
     def: 21,
     passive: "직보 · 시험집중",
-    img: "/images/nakmun.png",
+    img: "/nakmun.png",
     moves: [
       { name: "번개 직보", cost: 1, power: 34, desc: "상대 공격력 10 감소" },
       { name: "야.이.내.나", cost: 2, power: 61, desc: "강력한 초능력" }
@@ -25,7 +25,7 @@ window.MONSTER_CARDS = [
     atk: 30,
     def: 29,
     passive: "깻잎농장",
-    img: "/images/kkaet.png",
+    img: "/kkaet.png",
     moves: [
       { name: "맛있는 깻잎", cost: 1, power: 30, desc: "체력 회복" },
       { name: "신선한 깻잎 폭풍", cost: 2, power: 51, desc: "강력한 회복 공격" }
@@ -41,7 +41,7 @@ window.MONSTER_CARDS = [
     atk: 27,
     def: 35,
     passive: "철벽 수비",
-    img: "/images/opt.png",
+    img: "/opt.png",
     moves: [
       { name: "철벽 밀어내기", cost: 1, power: 25, desc: "보호막 획득" },
       { name: "문전박대", cost: 2, power: 52, desc: "상대 공격력 감소" }
@@ -57,7 +57,7 @@ window.MONSTER_CARDS = [
     atk: 29,
     def: 21,
     passive: "귀여움 폭발",
-    img: "/images/baby.png",
+    img: "/baby.png",
     moves: [
       { name: "때쓰기", cost: 1, power: 30, desc: "상대 공격력 감소" },
       { name: "무한 떼창", cost: 2, power: 51, desc: "상대 행동 방해" }
@@ -73,7 +73,7 @@ window.MONSTER_CARDS = [
     atk: 40,
     def: 19,
     passive: "마구잡이",
-    img: "/images/forbes.png",
+    img: "/forbes.png",
     moves: [
       { name: "마구잡이", cost: 1, power: 39, desc: "빠르고 강한 공격" },
       { name: "무한 투척", cost: 2, power: 64, desc: "강력한 공격" }
@@ -89,7 +89,7 @@ window.MONSTER_CARDS = [
     atk: 31,
     def: 26,
     passive: "무한리필",
-    img: "/images/doong.png",
+    img: "/doong.png",
     moves: [
       { name: "한입 먹기", cost: 1, power: 28, desc: "체력 회복" },
       { name: "무한리필", cost: 2, power: 50, desc: "강력한 회복 공격" }
@@ -105,7 +105,7 @@ window.MONSTER_CARDS = [
     atk: 43,
     def: 14,
     passive: "대빨 흡수",
-    img: "/images/daebb.png",
+    img: "/daebb.png",
     moves: [
       { name: "대빨 흡수", cost: 1, power: 38, desc: "체력 회복" },
       { name: "초대형 흡수", cost: 2, power: 61, desc: "강한 흡수 공격" }
@@ -121,7 +121,7 @@ window.MONSTER_CARDS = [
     atk: 38,
     def: 28,
     passive: "지진",
-    img: "/images/hwang.png",
+    img: "/hwang.png",
     moves: [
       { name: "지진", cost: 1, power: 35, desc: "벤치에도 피해" },
       { name: "지면 붕괴", cost: 2, power: 60, desc: "강력한 광역 공격" }
@@ -137,7 +137,7 @@ window.MONSTER_CARDS = [
     atk: 35,
     def: 24,
     passive: "넓은 어깨",
-    img: "/images/shoulder.png",
+    img: "/shoulder.png",
     moves: [
       { name: "어깨 밀기", cost: 1, power: 34, desc: "보호막 획득" },
       { name: "어깨 흡수", cost: 2, power: 57, desc: "상대 공격력 감소" }
