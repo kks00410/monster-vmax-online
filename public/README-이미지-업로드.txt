@@ -1,7 +1,7 @@
 MONSTER VMAX ONLINE - 카드 이미지
 
-압축을 풀면 public/images/ 폴더가 나옵니다. 이 폴더를 GitHub 저장소의 public/images/ 위치에 업로드하세요.
-저장소에 public 폴더가 없다면 public/images 폴더를 새로 만드세요.
+압축을 풀면 public/ 폴더가 나옵니다. 이 폴더를 GitHub 저장소의 public/ 위치에 업로드하세요.
+저장소에 public 폴더가 없다면 public/ 폴더를 새로 만드세요.
 
 파일 목록:
 - 포브스몬: /pobeoseu-mon.png
