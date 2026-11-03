@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <title>MONSTER VMAX ONLINE</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0a0e1b;--panel:#151d32;--panel2:#1d2944;--line:#354465;--text:#f4f6ff;--muted:#a8b5d2;--gold:#ffd36e;--cyan:#7be4ee;--green:#70dda5;--red:#ff8497;--purple:#b79aff}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -18%,#303c68 0,#131a30 38%,#080b14 100%);color:var(--text);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif;min-height:100vh}
+    button,input{font:inherit}button{cursor:pointer;color:inherit;border:0}button:disabled{opacity:.42;cursor:not-allowed}.hidden{display:none!important}
+    .wrap{max-width:1240px;margin:auto;padding:18px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px}.brand{font-weight:1000;letter-spacing:-1.4px;font-size:clamp(22px,4vw,34px)}.brand span{background:linear-gradient(90deg,#bd98ff,#67e0ef,#ffdc78);background-clip:text;color:transparent}.connection{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:12px;font-weight:800}.dot{width:9px;height:9px;border-radius:50%;background:#e8b45c;box-shadow:0 0 12px #e8b45c}.dot.online{background:#63e5a1;box-shadow:0 0 12px #63e5a1}.panel{background:linear-gradient(145deg,rgba(28,39,67,.96),rgba(15,21,39,.97));border:1px solid var(--line);border-radius:19px;box-shadow:0 12px 32px #0004}.muted{color:var(--muted)}.small{font-size:12px}.primary,.secondary,.danger{border-radius:12px;padding:11px 16px;font-weight:950;min-height:44px}.primary{background:linear-gradient(100deg,#7559e8,#318dc9);box-shadow:0 7px 20px #4b67d944}.secondary{background:#263656;border:1px solid #45577e}.danger{background:#5a314a;border:1px solid #8b4a68}.primary:hover,.secondary:hover,.danger:hover{filter:brightness(1.12)}input{width:100%;background:#0b1223;border:1px solid #46577c;border-radius:11px;color:var(--text);padding:12px 13px;min-height:46px;outline:none}input:focus{border-color:#9e90ff;box-shadow:0 0 0 3px #9e90ff25}label{display:block;font-weight:850;font-size:13px;margin:12px 0 6px}
+    .hero{padding:clamp(20px,4vw,34px);display:grid;grid-template-columns:1fr 1.2fr;gap:25px;align-items:center}.eyebrow{display:inline-block;color:#ffe098;background:#493b25;border:1px solid #8e7542;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:950;letter-spacing:.5px}.hero h1{font-size:clamp(30px,5vw,51px);line-height:1.03;letter-spacing:-1.8px;margin:14px 0}.hero p{line-height:1.7;color:var(--muted);margin:0 0 18px}.gallery{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}.mini{overflow:hidden;border-radius:10px;background:#090f1e;border:1px solid #39496c}.mini img{width:100%;display:block;aspect-ratio:2/3;object-fit:cover}.mini b{display:block;text-align:center;font-size:11px;padding:5px 2px}
+    .room-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:14px}.room-form{padding:20px}.room-form h2{margin:0 0 6px;font-size:20px}.room-form p{margin:0;color:var(--muted);font-size:13px;line-height:1.55}.room-form button{width:100%;margin-top:13px}.room-code-input{text-transform:uppercase;letter-spacing:4px;font-weight:1000;text-align:center;font-size:19px}
+    .section{padding:22px}.section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}.section h2{margin:0;font-size:22px}.code{font-size:clamp(27px,6vw,42px);font-weight:1000;letter-spacing:8px;color:var(--gold)}.player-slots{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}.slot{padding:17px;border:1px solid #405174;border-radius:13px;background:#0d1528}.slot strong{display:block;font-size:17px;margin-bottom:5px}.slot .state{font-size:12px;color:var(--muted)}
+    .pick-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:15px 0}.pick{position:relative;border:2px solid #334363;border-radius:13px;overflow:hidden;background:#0b1223;padding:0;text-align:left;transition:.15s}.pick.selected{border-color:var(--gold);box-shadow:0 0 0 3px #ffd36e2c;transform:translateY(-3px)}.pick img{width:100%;aspect-ratio:2/3;object-fit:cover;display:block}.pick-info{padding:8px}.pick-info strong{display:block;font-size:13px}.pick-info small{display:block;color:var(--muted);font-size:11px;margin-top:3px}.order{position:absolute;top:7px;left:7px;width:25px;height:25px;border-radius:50%;display:grid;place-items:center;background:var(--gold);color:#151a2b;font-weight:1000}
+    .statusbar{display:flex;gap:9px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:12px 15px;margin-bottom:13px}.pill{background:#0d1528;border:1px solid #405174;border-radius:999px;padding:8px 12px;font-size:13px;font-weight:900}.gold{color:var(--gold)}.board{display:grid;grid-template-columns:1fr 1fr;gap:13px}.side{padding:15px;min-width:0}.side-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:11px}.side-head h2{font-size:18px;margin:0}.prize{font-size:12px;color:var(--gold);font-weight:950}.fighter{display:grid;grid-template-columns:minmax(90px,130px) 1fr;gap:12px;align-items:center;background:#0c1426;border:1px solid #3d4d70;border-radius:15px;padding:10px;min-height:165px}.fighter.mine{width:100%;color:inherit;text-align:left;cursor:pointer}.fighter.mine.selected{outline:2px solid var(--gold);outline-offset:1px}.fighter.mine{border-color:#3e8ca0}.fighter.enemy{border-color:#986280}.card-img{display:block;width:100%;aspect-ratio:2/3;max-height:180px;object-fit:cover;border-radius:9px;box-shadow:0 5px 18px #0008}.fighter h3{margin:0 0 3px;font-size:19px}.type{display:inline-block;color:#121729;font-size:10px;font-weight:950;padding:3px 8px;border-radius:99px;margin:3px 0 7px}.meta{display:flex;gap:8px;flex-wrap:wrap;font-size:11px;color:#c5d0e7}.hp-line{height:9px;background:#39425d;border-radius:99px;overflow:hidden;margin:7px 0}.hp-fill{height:100%;background:linear-gradient(90deg,#4bd390,#c5e56e);border-radius:99px}.hp-fill.low{background:linear-gradient(90deg,#e85b72,#ffc06f)}.passive{font-size:11px;color:#d4c4ff;line-height:1.4;margin-top:7px}.energy{color:var(--cyan);font-weight:950}.benches{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.bench{display:flex;align-items:center;gap:8px;min-width:122px;max-width:190px;padding:6px 8px;text-align:left;background:#101a30;border:1px solid #394a6e;border-radius:11px}.bench.selected{border-color:var(--gold);box-shadow:0 0 0 2px #ffd36e30}.bench img{width:34px;height:50px;object-fit:cover;border-radius:5px}.bench b{display:block;font-size:11px}.bench small{display:block;color:var(--muted);font-size:10px}.field-label{font-size:11px;color:#9eacc8;font-weight:950;margin-top:13px;letter-spacing:.5px}.action-box{padding:15px;margin-top:13px}.action-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.action-tools{display:flex;gap:7px;flex-wrap:wrap}.tool{background:#253656;border:1px solid #46597f;border-radius:10px;padding:9px 12px;font-size:12px;font-weight:900;min-height:40px}.tool:disabled{opacity:.38}.tool.accent{background:#17665f;border-color:#4db8a7}.attacks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:13px}.attack{position:relative;text-align:left;background:linear-gradient(145deg,#253452,#17233b);border:1px solid #53648a;border-radius:12px;padding:12px;min-height:104px}.attack:disabled{opacity:.35}.attack strong{display:block;font-size:15px;margin:4px 0}.attack small{display:block;color:var(--muted);line-height:1.4}.cost{color:var(--cyan);font-size:11px;font-weight:950}.power{font-size:11px;color:var(--gold);font-weight:900}.hand-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:12px}.hand-card{background:#0c1426;border:1px solid #3b4c70;border-radius:12px;padding:8px;min-width:0}.hand-card img{width:100%;aspect-ratio:2/3;max-height:175px;object-fit:cover;border-radius:7px}.hand-card b{display:block;font-size:12px;margin:6px 0 2px}.hand-card small{display:block;color:var(--muted);font-size:10px;margin-bottom:7px}.hand-card button{width:100%;margin-top:5px;border-radius:8px;padding:8px 5px;background:#263858;font-size:11px;font-weight:900;min-height:36px}.hand-card button.discard{background:#58334b}.log{margin-top:13px;padding:13px}.log h3{margin:0 0 8px}.log-list{max-height:160px;overflow:auto;font-size:12px;line-height:1.65;color:#b9c5df}.log-list div{border-bottom:1px solid #ffffff0c;padding:2px 0}.log-list .good{color:#8ae8b3}.log-list .bad{color:#ff9aa9}.log-list .gold{color:var(--gold)}
+    .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#f1f4ff;color:#12172a;padding:11px 17px;border-radius:999px;font-size:13px;font-weight:950;box-shadow:0 8px 30px #0008;z-index:20;max-width:90%;text-align:center}.result{padding:20px;text-align:center;border:1px solid #9b8147;background:linear-gradient(140deg,#342b20,#1b2035);border-radius:15px;margin:12px 0}.result h2{font-size:30px;margin:4px 0}.footer-note{font-size:11px;color:#8997b4;line-height:1.6;margin:15px 2px}
+    @media(max-width:850px){.hero{grid-template-columns:1fr}.gallery{max-width:560px}.board{grid-template-columns:1fr}.fighter{grid-template-columns:105px 1fr}.pick-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    @media(max-width:520px){.wrap{padding:11px}.room-grid,.player-slots{grid-template-columns:1fr}.hero{padding:18px}.gallery{grid-template-columns:repeat(3,minmax(0,1fr))}.gallery .mini:nth-child(n+7){display:none}.pick-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.section{padding:15px}.fighter{grid-template-columns:88px 1fr;padding:8px;gap:9px;min-height:140px}.fighter h3{font-size:16px}.side{padding:11px}.attacks{grid-template-columns:1fr 1fr}.hand-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.action-box{padding:12px}.code{letter-spacing:5px}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <div class="brand">MONSTER <span>VMAX ONLINE</span></div>
+    <div class="connection"><i class="dot" id="connectionDot"></i><span id="connectionText">서버 연결 중…</span></div>
+  </header>
+
+  <section id="home">
+    <div class="panel hero">
+      <div>
+        <span class="eyebrow">REAL-TIME · 1 VS 1 · CUSTOM TCG</span>
+        <h1>나만의 카드로<br><span style="color:#a995ff">온라인 VMAX 배틀!</span></h1>
+        <p>친구와 같은 방에 접속해 실시간으로 대결해 봐. 방을 만들고 5자리 코드를 공유하면 상대가 입장할 수 있어. 네가 만든 9종의 카드 이미지와 고유 기술을 그대로 사용해.</p>
+        <div class="pill" style="display:inline-block">🏆 먼저 프라이즈 3장을 모으면 승리</div>
+      </div>
+      <div class="gallery" id="gallery"></div>
+    </div>
+    <div class="room-grid">
+      <form id="createForm" class="panel room-form">
+        <h2>🏟️ 방 만들기</h2><p>새 대전 방을 만들고 친구가 들어올 때까지 기다려.</p>
+        <label for="createName">내 닉네임</label><input id="createName" maxlength="12" placeholder="닉네임 (최대 12자)" required>
+        <button class="primary" type="submit">새 방 만들기</button>
+      </form>
+      <form id="joinForm" class="panel room-form">
+        <h2>🔑 방 참가하기</h2><p>친구에게 받은 5자리 방 코드를 입력해.</p>
+        <label for="joinName">내 닉네임</label><input id="joinName" maxlength="12" placeholder="닉네임 (최대 12자)" required>
+        <label for="joinCode">방 코드</label><input id="joinCode" class="room-code-input" maxlength="5" minlength="5" placeholder="ABCDE" autocomplete="off" required>
+        <button class="primary" type="submit">대전에 참가하기</button>
+      </form>
+    </div>
+    <div id="resumeBox" class="panel room-form hidden" style="margin-top:13px"><h2>이전 대전 이어하기</h2><p>이 브라우저에 저장된 방 정보가 있어. 연결을 복구할 수 있어.</p><button id="resumeBtn" class="secondary" type="button">이전 방 다시 접속</button></div>
+    <p class="footer-note">대전은 실시간 연결을 사용하는 1대1 방식이야. 방 상태는 서버 메모리에 보관되므로 서버가 재시작되면 진행 중인 방은 초기화돼. 친구와 같은 방 코드를 사용해 접속해 줘.</p>
+  </section>
+
+  <section id="lobby" class="panel section hidden">
+    <div class="section-head"><div><h2>친구를 기다리는 중</h2><p class="muted small">아래 코드를 친구에게 공유해 줘.</p></div><button class="secondary" id="backHome" type="button">나가기</button></div>
+    <div class="code" id="roomCodeDisplay">-----</div>
+    <button class="secondary" id="copyCode" type="button">코드 복사</button>
+    <div class="player-slots" id="lobbyPlayers"></div>
+    <p class="muted small">두 번째 플레이어가 입장하면 카드 선택 화면으로 자동 이동해.</p>
+  </section>
+
+  <section id="selection" class="panel section hidden">
+    <div class="section-head"><div><h2>시작 팀 구성</h2><p class="muted small">카드를 1~3장 선택해. 선택 순서가 중요해: ① 배틀 몬 ②·③ 벤치 몬.</p></div><div class="pill" id="readyStatus">상대 준비 대기</div></div>
+    <div id="selectionGrid" class="pick-grid"></div>
+    <div class="section-head"><span class="muted small" id="selectionCount">0 / 3장 선택</span><button id="readyBtn" class="primary" type="button" disabled>팀 구성 완료</button></div>
+    <p class="muted small" id="selectionMessage" style="margin:12px 0 0">첫 번째로 선택한 카드가 배틀 몬이 돼. 두 플레이어가 모두 준비하면 대전이 시작돼.</p>
+  </section>
+
+  <main id="battle" class="hidden">
+    <div class="panel statusbar">
+      <div class="pill gold" id="turnLabel">턴 정보</div><div class="pill" id="roomPill">방 -----</div><div class="pill" id="phaseLabel">행동을 선택해</div>
+    </div>
+    <div id="resultBox" class="result hidden" aria-live="polite"></div>
+    <div class="board">
+      <section class="panel side">
+        <div class="side-head"><h2>🧑 상대 팀 · <span id="opponentName">상대</span></h2><div class="prize" id="opponentPrize">프라이즈 0 / 3</div></div>
+        <div id="opponentActive"></div>
+        <div class="field-label">상대 벤치</div><div id="opponentBench" class="benches"></div>
+        <div class="meta" id="opponentMeta" style="margin-top:10px"></div>
+      </section>
+      <section class="panel side">
+        <div class="side-head"><h2>⭐ 나의 팀 · <span id="myName">나</span></h2><div class="prize" id="myPrize">프라이즈 0 / 3</div></div>
+        <div id="myActive"></div>
+        <div class="field-label">나의 벤치 · 카드를 눌러 선택</div><div id="myBench" class="benches"></div>
+        <div class="meta" id="myMeta" style="margin-top:10px"></div>
+      </section>
+    </div>
+    <section class="panel action-box">
+      <div class="action-top"><strong>⚡ 내 행동</strong><div class="action-tools">
+        <button id="attachBtn" class="tool accent" type="button">⚡ 선택 카드에 에너지 +1</button>
+        <button id="switchBtn" class="tool" type="button">⇄ 선택한 몬으로 교체</button>
+        <button id="endTurnBtn" class="tool" type="button">턴 종료 →</button>
+      </div></div>
+      <p class="muted small" id="targetLabel" style="margin:9px 0 0">에너지를 받을 카드를 선택해.</p>
+      <div id="attacks" class="attacks"></div>
+    </section>
+    <section class="panel section" style="margin-top:13px">
+      <div class="section-head"><div><h2>🃏 내 손패</h2><p class="muted small">카드를 벤치에 내거나, 버려서 선택한 몬에게 에너지 1개를 줄 수 있어.</p></div><div class="pill" id="handCount">손패 0장</div></div>
+      <div id="hand" class="hand-grid"></div>
+    </section>
+    <section class="panel log"><h3>📜 대전 기록</h3><div class="log-list" id="logList" aria-live="polite"></div></section>
+  </main>
+</div>
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/cards.js"></script>
+<script>
+(() => {
+  const CARDS = window.MONSTER_CARDS || [];
+  const BY_ID = Object.fromEntries(CARDS.map(c => [c.id, c]));
+  const $ = id => document.getElementById(id);
+  const socket = io({ transports: ['websocket', 'polling'] });
+  let view = null;
+  let selectedUids = [];
+  let selectedTargetUid = null;
+  let session = null;
+  let toastTimer = null;
+  try { session = JSON.parse(localStorage.getItem('monsterVmaxSession') || 'null'); } catch (_) { session = null; }
+
+  function showToast(message) {
+    $('toast').textContent = message;
+    $('toast').classList.remove('hidden');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => $('toast').classList.add('hidden'), 2300);
+  }
+  function escapeHtml(value) {
+    return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  }
+  function cardImage(card, extra = '') {
+    return `<img class="card-img ${extra}" src="${card.img}" alt="${escapeHtml(card.name)}" loading="lazy">`;
+  }
+  function showScreen(name) {
+    ['home','lobby','selection','battle'].forEach(id => $(id).classList.toggle('hidden', id !== name));
+  }
+  function request(event, payload) {
+    return new Promise(resolve => {
+      if (!socket.connected) return resolve({ ok: false, error: '게임 서버와 연결되지 않았어. 연결 상태를 확인해 줘.' });
+      socket.timeout(8000).emit(event, payload, (timeoutError, response) => {
+        if (timeoutError) return resolve({ ok: false, error: '서버 응답이 늦어지고 있어. 다시 시도해 줘.' });
+        resolve(response || { ok: false, error: '서버 응답을 받지 못했어.' });
+      });
+    });
+  }
+  function saveSession(data, name) {
+    session = { code: data.code, token: data.token, name };
+    localStorage.setItem('monsterVmaxSession', JSON.stringify(session));
+  }
+  function clearSession() {
+    session = null;
+    localStorage.removeItem('monsterVmaxSession');
+    $('resumeBox').classList.add('hidden');
+    view = null;
+    selectedUids = [];
+    selectedTargetUid = null;
+    showScreen('home');
+  }
+  async function leaveToHome() {
+    if (socket.connected && view) await request('leave-room', {});
+    clearSession();
+  }
+  function updateConnection(online) {
+    $('connectionDot').classList.toggle('online', online);
+    $('connectionText').textContent = online ? '서버 연결됨' : '서버 연결 끊김 · 재접속 중';
+  }
+  function getCard(mon) { return BY_ID[mon.id]; }
+  function getMySide() { return view && view.players[view.myIndex]; }
+  function getEnemySide() { return view && view.players[1 - view.myIndex]; }
+  function isMyTurn() { return !!view && view.phase === 'battle' && view.current === view.myIndex && !view.over; }
+  function findMyTarget() {
+    const side = getMySide();
+    if (!side) return null;
+    if (side.active && side.active.uid === selectedTargetUid) return side.active;
+    return side.bench.find(m => m.uid === selectedTargetUid) || side.active;
+  }
+  function fighterHtml(mon, owner, clickable = false) {
+    if (!mon) return '<div class="fighter">배틀 몬 없음</div>';
+    const c = getCard(mon);
+    const pct = Math.max(0, mon.hp) / mon.maxHp * 100;
+    const selected = clickable && mon.uid === selectedTargetUid;
+    const inner = `${cardImage(c)}<div><h3>${escapeHtml(c.name)}</h3><span class="type" style="background:${c.color}">${escapeHtml(c.symbol)} ${escapeHtml(c.type)}</span><div class="meta"><b>HP ${mon.hp} / ${mon.maxHp}</b></div><div class="hp-line"><div class="hp-fill ${pct < 30 ? 'low' : ''}" style="width:${pct}%"></div></div><div class="meta"><span>⚔ 공격 ${c.atk}</span><span>🛡 방어 ${c.def}</span><span class="energy">⚡ ${mon.energy}</span>${mon.shield ? `<span>보호막 ${mon.shield}</span>` : ''}</div><div class="passive">특성: ${escapeHtml(c.passive)}</div></div>`;
+    if (clickable) return `<button type="button" class="fighter mine ${selected ? 'selected' : ''}" data-target="${mon.uid}" aria-pressed="${selected}">${inner}</button>`;
+    return `<div class="fighter ${owner}">${inner}</div>`;
+  }
+  function benchHtml(mon, index, clickable) {
+    const c = getCard(mon);
+    const selected = clickable && mon.uid === selectedTargetUid;
+    const content = `${cardImage(c)}<span><b>${escapeHtml(c.name)}</b><small>HP ${mon.hp}/${mon.maxHp} · ⚡${mon.energy}</small><small>${escapeHtml(c.type)}</small></span>`;
+    return clickable
+      ? `<button type="button" class="bench ${selected ? 'selected' : ''}" data-target="${mon.uid}" aria-pressed="${selected}">${content}</button>`
+      : `<div class="bench">${content}</div>`;
+  }
+  function renderGallery() {
+    $('gallery').innerHTML = CARDS.map(c => `<div class="mini"><img src="${c.img}" alt="${escapeHtml(c.name)}"><b>${escapeHtml(c.name)}</b></div>`).join('');
+  }
+  function renderLobby() {
+    showScreen('lobby');
+    $('roomCodeDisplay').textContent = view.roomCode;
+    $('lobbyPlayers').innerHTML = [0,1].map(i => {
+      const p = view.players[i];
+      return `<div class="slot"><strong>${i === 0 ? '플레이어 1' : '플레이어 2'}</strong><div>${p ? escapeHtml(p.name) : '친구를 기다리는 중…'}</div><div class="state">${p ? (p.connected ? '● 접속 중' : '○ 연결 끊김') : '아직 입장하지 않음'}</div></div>`;
+    }).join('');
+  }
+  function renderSelection() {
+    showScreen('selection');
+    const hand = view.setupHand || [];
+    const me = view.players[view.myIndex];
+    const enemyReady = view.readyFlags[1 - view.myIndex];
+    $('selectionGrid').innerHTML = hand.map((mon, i) => {
+      const c = getCard(mon);
+      const order = selectedUids.indexOf(mon.uid);
+      return `<button type="button" class="pick ${order >= 0 ? 'selected' : ''}" data-pick="${mon.uid}" ${me.ready ? 'disabled' : ''}>${order >= 0 ? `<span class="order">${order + 1}</span>` : ''}<img src="${c.img}" alt="${escapeHtml(c.name)}"><div class="pick-info"><strong>${escapeHtml(c.name)}</strong><small>HP ${c.hp} · 공격 ${c.atk} · 방어 ${c.def}</small></div></button>`;
+    }).join('');
+    $('selectionCount').textContent = `${selectedUids.length} / 3장 선택 · 첫 번째가 배틀 몬`;
+    $('readyBtn').disabled = me.ready || selectedUids.length < 1;
+    $('readyBtn').textContent = me.ready ? '준비 완료 · 상대 대기 중' : '팀 구성 완료';
+    $('readyStatus').textContent = enemyReady ? '상대 준비 완료' : '상대 준비 대기';
+    $('selectionMessage').textContent = me.ready ? '팀 구성을 잠갔어. 상대가 준비하면 대전이 자동으로 시작돼.' : '선택 순서를 바꾸려면 카드를 다시 눌러 선택을 해제한 뒤 원하는 순서로 선택해.';
+  }
+  function renderBattle() {
+    showScreen('battle');
+    const me = getMySide();
+    const enemy = getEnemySide();
+    const mine = isMyTurn();
+    if (!selectedTargetUid || ![me.active, ...me.bench].some(m => m.uid === selectedTargetUid)) selectedTargetUid = me.active.uid;
+    const target = findMyTarget();
+    $('turnLabel').textContent = mine ? `내 턴 · ${me.turn}` : `${enemy.name}의 턴 · ${enemy.turn}`;
+    $('phaseLabel').textContent = view.over ? '대전 종료' : mine ? '행동을 선택해!' : '상대가 행동 중…';
+    $('roomPill').textContent = `방 ${view.roomCode}`;
+    $('opponentName').textContent = enemy.name;
+    $('myName').textContent = me.name;
+    $('opponentPrize').textContent = `프라이즈 ${enemy.prizes} / 3`;
+    $('myPrize').textContent = `프라이즈 ${me.prizes} / 3`;
+    $('opponentActive').innerHTML = fighterHtml(enemy.active, 'enemy', false);
+    $('myActive').innerHTML = fighterHtml(me.active, 'mine', true);
+    $('opponentBench').innerHTML = enemy.bench.length ? enemy.bench.map((m,i) => benchHtml(m,i,false)).join('') : '<span class="muted small">벤치 없음</span>';
+    $('myBench').innerHTML = me.bench.length ? me.bench.map((m,i) => benchHtml(m,i,true)).join('') : '<span class="muted small">벤치 없음</span>';
+    $('opponentMeta').innerHTML = `<span>손패 ${enemy.handCount}장</span><span>덱 ${enemy.deckCount}장</span><span>${enemy.connected ? '접속 중' : '연결 끊김 · 재접속 대기'}</span>`;
+    $('myMeta').innerHTML = `<span>손패 ${me.handCount}장</span><span>덱 ${me.deckCount}장</span><span>${me.attachAvailable ? '일반 에너지 부착 가능' : '일반 에너지 부착 완료'}</span>`;
+    $('targetLabel').textContent = `선택 대상: ${getCard(target).name} · 에너지 ${target.energy} · HP ${target.hp}/${target.maxHp}`;
+    $('attachBtn').disabled = !mine || !me.attachAvailable;
+    $('switchBtn').disabled = !mine || !me.bench.some(m => m.uid === selectedTargetUid);
+    $('endTurnBtn').disabled = !mine;
+    const activeCard = getCard(me.active);
+    $('attacks').innerHTML = activeCard.moves.map((move, i) => {
+      const can = mine && me.active.energy >= move.cost;
+      const dmg = Math.max(8, move.power + Math.floor((activeCard.atk - (me.active.weaken || 0)) * .28) - Math.floor(getCard(enemy.active).def * .24));
+      return `<button type="button" class="attack" data-attack="${i}" ${can ? '' : 'disabled'}><span class="cost">⚡ ${move.cost} 에너지</span><strong>${escapeHtml(move.name)}</strong><span class="power">기본 예상 피해 ${dmg}</span><small>${escapeHtml(move.desc)}</small></button>`;
+    }).join('');
+    const hand = me.hand || [];
+    $('handCount').textContent = `${hand.length}장 · 벤치 최대 3장`;
+    $('hand').innerHTML = hand.map((mon, i) => {
+      const c = getCard(mon);
+      return `<div class="hand-card"><img src="${c.img}" alt="${escapeHtml(c.name)}"><b>${escapeHtml(c.name)}</b><small>HP ${c.hp} · ${escapeHtml(c.type)}</small><button type="button" data-bench-card="${mon.uid}" ${!mine || me.bench.length >= 3 ? 'disabled' : ''}>벤치에 내기</button><button type="button" class="discard" data-discard-card="${mon.uid}" ${!mine ? 'disabled' : ''}>버리고 ⚡+1</button></div>`;
+    }).join('') || '<p class="muted small">손패가 비어 있어.</p>';
+    $('logList').innerHTML = (view.logs || []).slice().reverse().map(entry => `<div class="${escapeHtml(entry.tone || '')}">${escapeHtml(entry.message)}</div>`).join('');
+    if (view.over) {
+      $('resultBox').classList.remove('hidden');
+      const won = view.winner === view.myIndex;
+      $('resultBox').innerHTML = `<div style="font-size:34px">${won ? '🏆' : '✨'}</div><h2>${won ? '승리!' : '대전 종료'}</h2><p>${escapeHtml(view.reason || '')}</p><p class="muted small">새 방을 만들거나 다른 방 코드로 다시 참가할 수 있어.</p><button type="button" id="leaveAfterGame" class="secondary">홈으로 돌아가기</button>`;
+      $('leaveAfterGame').onclick = () => { leaveToHome(); };
+    } else {
+      $('resultBox').classList.add('hidden');
+    }
+  }
+  function render() {
+    if (!view) return;
+    if (view.phase === 'lobby') renderLobby();
+    else if (view.phase === 'select') renderSelection();
+    else renderBattle();
+  }
+  async function createRoom(name) {
+    const result = await request('create-room', { name });
+    if (!result.ok) return showToast(result.error);
+    saveSession(result, name);
+    showToast(`방 생성 완료! 코드 ${result.code}`);
+  }
+  async function joinRoom(name, code) {
+    const result = await request('join-room', { name, code });
+    if (!result.ok) return showToast(result.error);
+    saveSession(result, name);
+    showToast('방에 입장했어! 카드를 선택해 줘.');
+  }
+  async function resumeRoom() {
+    if (!session) return;
+    const result = await request('resume-room', session);
+    if (!result.ok) {
+      showToast(result.error);
+      clearSession();
+    } else {
+      showToast('이전 대전에 다시 연결했어.');
+    }
+  }
+  async function sendAction(action) {
+    const result = await request('game-action', action);
+    if (!result.ok) showToast(result.error);
+  }
+
+  $('createForm').addEventListener('submit', e => { e.preventDefault(); createRoom($('createName').value.trim()); });
+  $('joinForm').addEventListener('submit', e => { e.preventDefault(); joinRoom($('joinName').value.trim(), $('joinCode').value.trim().toUpperCase()); });
+  $('joinCode').addEventListener('input', () => { $('joinCode').value = $('joinCode').value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0,5); });
+  $('resumeBtn').addEventListener('click', resumeRoom);
+  $('copyCode').addEventListener('click', async () => {
+    const code = $('roomCodeDisplay').textContent;
+    try { await navigator.clipboard.writeText(code); showToast('방 코드를 복사했어!'); }
+    catch (_) { showToast(`친구에게 이 코드를 알려줘: ${code}`); }
+  });
+  $('backHome').addEventListener('click', () => {
+    if (confirm('현재 방에서 나갈까? 대전 중이라면 상대의 승리로 처리돼.')) leaveToHome();
+  });
+  $('selectionGrid').addEventListener('click', e => {
+    const btn = e.target.closest('[data-pick]');
+    if (!btn || !view || view.players[view.myIndex].ready) return;
+    const id = btn.dataset.pick;
+    const index = selectedUids.indexOf(id);
+    if (index >= 0) selectedUids.splice(index, 1);
+    else if (selectedUids.length < 3) selectedUids.push(id);
+    else showToast('시작 카드는 최대 3장까지 선택할 수 있어.');
+    renderSelection();
+  });
+  $('readyBtn').addEventListener('click', async () => {
+    const result = await request('select-team', { uids: selectedUids });
+    if (!result.ok) showToast(result.error);
+  });
+  $('myActive').addEventListener('click', e => {
+    const btn = e.target.closest('[data-target]');
+    if (!btn || !isMyTurn()) return;
+    selectedTargetUid = btn.dataset.target;
+    renderBattle();
+  });
+  $('myBench').addEventListener('click', e => {
+    const btn = e.target.closest('[data-target]');
+    if (!btn || !isMyTurn()) return;
+    selectedTargetUid = btn.dataset.target;
+    renderBattle();
+  });
+  $('attachBtn').addEventListener('click', () => sendAction({ type: 'attach', targetUid: selectedTargetUid }));
+  $('switchBtn').addEventListener('click', () => sendAction({ type: 'switch', targetUid: selectedTargetUid }));
+  $('endTurnBtn').addEventListener('click', () => sendAction({ type: 'end-turn' }));
+  $('attacks').addEventListener('click', e => {
+    const btn = e.target.closest('[data-attack]');
+    if (btn && !btn.disabled) sendAction({ type: 'attack', moveIndex: Number(btn.dataset.attack) });
+  });
+  $('hand').addEventListener('click', e => {
+    const play = e.target.closest('[data-bench-card]');
+    if (play && !play.disabled) { sendAction({ type: 'bench', cardUid: play.dataset.benchCard }); return; }
+    const discard = e.target.closest('[data-discard-card]');
+    if (discard && !discard.disabled) sendAction({ type: 'discard', cardUid: discard.dataset.discardCard, targetUid: selectedTargetUid });
+  });
+
+  socket.on('connect', () => {
+    updateConnection(true);
+    if (session) resumeRoom();
+  });
+  socket.on('disconnect', () => updateConnection(false));
+  socket.on('connect_error', () => updateConnection(false));
+  socket.on('room-state', nextView => {
+    view = nextView;
+    if (nextView.phase === 'select') {
+      if (nextView.players[nextView.myIndex].ready) selectedUids = [...(nextView.chosen || [])];
+      else {
+        const allowed = new Set((nextView.setupHand || []).map(m => m.uid));
+        selectedUids = selectedUids.filter(id => allowed.has(id));
+      }
+    }
+    if (nextView.phase === 'battle' || nextView.phase === 'finished') {
+      if (!selectedTargetUid) selectedTargetUid = nextView.players[nextView.myIndex].active?.uid || null;
+    }
+    render();
+  });
+  renderGallery();
+  if (session) $('resumeBox').classList.remove('hidden');
+  updateConnection(socket.connected);
+})();
+</script>
+</body>
+</html>
